@@ -62,22 +62,21 @@ async def async_setup_entry(
 
         for section in sections:
             can_control = section["can-control"]
-            if can_control:
-                friendly_name = section["name"]
-                component_id = section[COMP_ID]
-                partial_arm_enabled = bool(section["partial-arm-enabled"])
-                need_authorization = bool(section["need-authorization"])
-                _LOGGER.debug("Controllable section discovered: %s", friendly_name)
-                entities.append(
-                    JablotronAlarmControlPanel(
-                        coordinator,
-                        service_id,
-                        component_id,
-                        partial_arm_enabled,
-                        need_authorization,
-                        friendly_name,
-                    )
+            friendly_name = section["name"]
+            component_id = section[COMP_ID]
+            partial_arm_enabled = bool(section["partial-arm-enabled"])
+            need_authorization = bool(section["need-authorization"])
+            _LOGGER.debug("Controllable section discovered: %s", friendly_name)
+            entities.append(
+                JablotronAlarmControlPanel(
+                    coordinator,
+                    service_id,
+                    component_id,
+                    partial_arm_enabled,
+                    need_authorization,
+                    friendly_name,
                 )
+            )
 
     async_add_entities(entities, True)
 
